@@ -1,6 +1,28 @@
 ;(function () {
+  function applyWeatherPosition() {
+    const container = document.getElementById('tp-weather-widget')
+    if (!container) return
+
+    container.style.position = 'fixed'
+    container.style.left = '16px'
+    container.style.top = '50%'
+    container.style.transform = 'translateY(-50%)'
+    container.style.zIndex = '30'
+    container.style.maxWidth = '220px'
+
+    if (window.innerWidth <= 768) {
+      container.style.left = '8px'
+      container.style.top = '72px'
+      container.style.transform = 'none'
+      container.style.maxWidth = 'calc(100vw - 16px)'
+    }
+  }
+
   function initWeather() {
-    if (!document.getElementById('tp-weather-widget')) return
+    const container = document.getElementById('tp-weather-widget')
+    if (!container) return
+
+    applyWeatherPosition()
 
     ;(function (a, h, g, f, e, d, c, b) {
       b = function () {
@@ -43,4 +65,5 @@
 
   initWeather()
   document.addEventListener('pjax:complete', initWeather)
+  window.addEventListener('resize', applyWeatherPosition)
 })()
